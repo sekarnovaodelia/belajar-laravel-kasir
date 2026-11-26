@@ -1,36 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasir App</title>
+    
+    <!-- CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
-    <nav class="navbar navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="{{ route('dashboard') }}">Kasir App</a>
-        <div class="d-flex align-items-center">
-            <a href="{{ route('dashboard') }}" class="btn btn-sm btn-outline-light me-1">Dashboard</a>
-            @if(auth()->user()->role === 'admin')
-                <a href="{{ route('jenis.index') }}" class="btn btn-sm btn-outline-light me-1">Jenis</a>
-                <a href="{{ route('barang.index') }}" class="btn btn-sm btn-outline-light me-1">Barang</a>
-            @endif
-            <a href="{{ route('pelanggan.index') }}" class="btn btn-sm btn-outline-light me-1">Pelanggan</a>
-            <a href="{{ route('transaksi.index') }}" class="btn btn-sm btn-outline-light me-3">Transaksi</a>
-            <a href="{{ route('transaksi.laporan') }}" class="btn btn-sm btn-outline-light me-1">Laporan</a>
 
-            @auth
-                <span class="text-white me-2">{{ auth()->user()->name }}</span>
-                <form action="{{ route('logout') }}" method="POST" style="display:inline">
-                    @csrf
-                    <button class="btn btn-sm btn-danger">Logout</button>
-                </form>
-            @endauth
+    <!-- Sidebar -->
+    @include('partials.sidebar')
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        @include('partials.topbar')
+
+        <!-- Content -->
+        <div class="flex-grow-1">
+            @yield('content')
         </div>
+
+        <!-- Footer -->
+        @include('partials.footer')
     </div>
-</nav>
+
+    <!-- JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
-    <div class="container mt-4">
-        @yield('content')
-    </div>
+    <!-- Custom JS -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    
+    <!-- Script Khusus Halaman (Opsional) -->
+    @stack('scripts')
 </body>
 </html>

@@ -1,84 +1,106 @@
 @extends('layouts.app')
-
+@section('title', 'Dashboard')
 @section('content')
-<div class="container">
-    <h2 class="mb-4">Dashboard</h2>
+<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+    <div class="d-flex align-items-center gap-3">
+        <div class="icon-box bg-primary bg-opacity-10 text-primary"><i class="bi bi-speedometer2"></i></div>
+        <div>
+            <h4 class="mb-0 fw-bold text-dark">Dashboard</h4>
+            <p class="text-muted small mb-0">Ringkasan aktivitas toko Anda hari ini</p>
+        </div>
+    </div>
+</div>
 
-    <div class="row">
-        <div class="col-md-3 mb-3">
-            <div class="card bg-primary text-white">
-                <div class="card-body">
-                    <h6>Total Barang</h6>
-                    <h2>{{ $jumlahBarang }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card bg-success text-white">
-                <div class="card-body">
-                    <h6>Total Pelanggan</h6>
-                    <h2>{{ $jumlahPelanggan }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card bg-warning text-white">
-                <div class="card-body">
-                    <h6>Total Transaksi</h6>
-                    <h2>{{ $jumlahTransaksi }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 mb-3">
-            <div class="card bg-danger text-white">
-                <div class="card-body">
-                    <h6>Total Pendapatan</h6>
-                    <h2>Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</h2>
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="card pos-card h-100 bg-primary bg-gradient text-white border-0">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1 text-white-50">Total Barang</h6>
+                        <h2 class="mb-0 fw-bold">{{ $jumlahBarang }}</h2>
+                    </div>
+                    <i class="bi bi-box-seam fs-1 opacity-50"></i>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="card mt-3">
-        <div class="card-header">
-            <h5 class="mb-0">5 Transaksi Terbaru</h5>
-        </div>
-        <div class="card-body">
-            <table class="table table-bordered mb-0">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Pelanggan</th>
-                        <th>Barang</th>
-                        <th>Jumlah</th>
-                        <th>Total</th>
-                        <th>Tanggal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($transaksiTerbaru as $i => $t)
-                    <tr>
-                        <td>{{ $i + 1 }}</td>
-                        <td>{{ $t->pelanggan->nama_pelanggan }}</td>
-                        <td>{{ $t->barang->nama_barang }}</td>
-                        <td>{{ $t->jumlah }}</td>
-                        <td>Rp {{ number_format($t->total, 0, ',', '.') }}</td>
-                        <td>{{ $t->tanggal }}</td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center">Belum ada transaksi</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+    <div class="col-md-3">
+        <div class="card pos-card h-100 bg-success bg-gradient text-white border-0">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1 text-white-50">Total Pelanggan</h6>
+                        <h2 class="mb-0 fw-bold">{{ $jumlahPelanggan }}</h2>
+                    </div>
+                    <i class="bi bi-people fs-1 opacity-50"></i>
+                </div>
+            </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card pos-card h-100 bg-warning bg-gradient text-white border-0">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1 text-white-50">Total Transaksi</h6>
+                        <h2 class="mb-0 fw-bold">{{ $jumlahTransaksi }}</h2>
+                    </div>
+                    <i class="bi bi-cart fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card pos-card h-100 bg-danger bg-gradient text-white border-0">
+            <div class="card-body p-4">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="mb-1 text-white-50">Pendapatan</h6>
+                        <h4 class="mb-0 fw-bold">Rp {{ number_format($totalPendapatan, 0, ',', '.') }}</h4>
+                    </div>
+                    <i class="bi bi-cash-stack fs-1 opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <div class="card mt-3">
-        <div class="card-header">Pendapatan 7 Hari Terakhir</div>
-        <div class="card-body">
-            <canvas id="grafik" height="80"></canvas>
+<div class="row g-4">
+    <div class="col-lg-8">
+        <div class="card pos-card h-100">
+            <div class="card-header pos-header">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-bar-chart text-primary me-2"></i> Pendapatan 7 Hari Terakhir</h6>
+            </div>
+            <div class="card-body p-4">
+                <canvas id="grafik" height="100"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card pos-card h-100">
+            <div class="card-header pos-header">
+                <h6 class="mb-0 fw-bold"><i class="bi bi-clock-history text-primary me-2"></i> 5 Transaksi Terbaru</h6>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-pos align-middle mb-0">
+                        <tbody>
+                            @forelse($transaksiTerbaru as $t)
+                            <tr>
+                                <td class="ps-4 py-3">
+                                    <span class="fw-semibold d-block text-dark">{{ $t->pelanggan ? $t->pelanggan->nama_pelanggan : $t->nama_pelanggan_manual }}</span>
+                                    <small class="text-muted">{{ \Carbon\Carbon::parse($t->tanggal)->format('d M Y') }}</small>
+                                </td>
+                                <td class="text-end pe-4 fw-bold text-success tabular-nums">Rp {{ number_format($t->total, 0, ',', '.') }}</td>
+                            </tr>
+                            @empty
+                            <tr><td class="text-center py-4 text-muted">Belum ada transaksi</td></tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -90,12 +112,9 @@
         type: 'bar',
         data: {
             labels: @json(array_column($grafik, 'tanggal')),
-            datasets: [{
-                label: 'Pendapatan (Rp)',
-                data: @json(array_column($grafik, 'jumlah')),
-                backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            }]
-        }
+            datasets: [{ label: 'Pendapatan (Rp)', data: @json(array_column($grafik, 'jumlah')), backgroundColor: 'rgba(13, 110, 253, 0.5)', borderColor: 'rgba(13, 110, 253, 1)', borderWidth: 1, borderRadius: 5 }]
+        },
+        options: { scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } }
     });
 </script>
 @endsection

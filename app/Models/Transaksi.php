@@ -11,12 +11,12 @@ class Transaksi extends Model
 
     protected $table = 'transaksi';
 
+    // Tambahkan nama_pelanggan_manual
     protected $fillable = [
-        'pelanggan_id',
-        'barang_id',
-        'jumlah',
-        'total',
-        'tanggal',
+        'pelanggan_id', 
+        'nama_pelanggan_manual', 
+        'total', 
+        'tanggal'
     ];
 
     public function pelanggan()
@@ -24,8 +24,9 @@ class Transaksi extends Model
         return $this->belongsTo(Pelanggan::class, 'pelanggan_id');
     }
 
-    public function barang()
+    // Relasi Baru: 1 transaksi punya banyak detail
+    public function detail()
     {
-        return $this->belongsTo(Barang::class, 'barang_id');
+        return $this->hasMany(TransaksiDetail::class, 'transaksi_id');
     }
 }

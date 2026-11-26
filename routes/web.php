@@ -7,27 +7,53 @@ use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\StokMasukController;
 
-// Login & logout (bisa diakses tanpa login)
+/*
+|--------------------------------------------------------------------------
+| ROUTE TANPA LOGIN (GUEST)
+|--------------------------------------------------------------------------
+*/
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Register
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
+
+/*
+|--------------------------------------------------------------------------
+| ROUTE WAJIB LOGIN (AUTH)
+|--------------------------------------------------------------------------
+*/
+Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Semua role bisa akses
     Route::resource('pelanggan', PelangganController::class);
-        Route::get('transaksi/laporan', [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
-    Route::resource('transaksi', TransaksiController::class);
 
-    // Hanya admin
+    // --- PINDAHKAN RUTE KHUSUS KE ATAS RESOURCE ---
+    Route::get('transaksi/laporan', [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
+    Route::get('transaksi/export-pdf', [TransaksiController::class, 'exportPdf'])->name('transaksi.exportPdf');
+    Route::get('transaksi/{id}/struk', [TransaksiController::class, 'struk'])->name('transaksi.struk');
+    
+    Route::post('transaksi/cart/tambah', [TransaksiController::class, 'tambahKeCart'])->name('transaksi.cart.tambah');
+    Route::delete('transaksi/cart/hapus/{id}', [TransaksiController::class, 'hapusCart'])->name('transaksi.cart.hapus');
+
+    // RESOURCE DILETAKKAN PALING BAWAH
+    Route::resource('transaksi', TransaksiController::class);
+    // ----------------------------------------------
+
     Route::middleware('role:admin')->group(function () {
         Route::resource('jenis', JenisBarangController::class);
         Route::resource('barang', BarangController::class);
+        Route::resource('supplier', SupplierController::class);
+        Route::get('stok-masuk', [StokMasukController::class, 'index'])->name('stok-masuk.index');
+        Route::get('stok-masuk/create', [StokMasukController::class, 'create'])->name('stok-masuk.create');
+        Route::post('stok-masuk', [StokMasukController::class, 'store'])->name('stok-masuk.store');
     });
+});
+
 });
