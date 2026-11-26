@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JenisBarangController;
 use App\Http\Controllers\BarangController;
@@ -16,14 +17,17 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-// Semua route di bawah ini WAJIB login
 Route::middleware('auth')->group(function () {
-    Route::get('/', function () {
-        return redirect()->route('barang.index');
-    });
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    Route::resource('jenis', JenisBarangController::class);
-    Route::resource('barang', BarangController::class);
+    // Semua role bisa akses
     Route::resource('pelanggan', PelangganController::class);
+        Route::get('transaksi/laporan', [TransaksiController::class, 'laporan'])->name('transaksi.laporan');
     Route::resource('transaksi', TransaksiController::class);
+
+    // Hanya admin
+    Route::middleware('role:admin')->group(function () {
+        Route::resource('jenis', JenisBarangController::class);
+        Route::resource('barang', BarangController::class);
+    });
 });

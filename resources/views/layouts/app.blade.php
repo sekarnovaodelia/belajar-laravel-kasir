@@ -7,12 +7,16 @@
 <body>
     <nav class="navbar navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="/">Kasir App</a>
+        <a class="navbar-brand" href="{{ route('dashboard') }}">Kasir App</a>
         <div class="d-flex align-items-center">
-            <a href="{{ route('jenis.index') }}" class="btn btn-sm btn-outline-light me-1">Jenis</a>
-            <a href="{{ route('barang.index') }}" class="btn btn-sm btn-outline-light me-1">Barang</a>
+            <a href="{{ route('dashboard') }}" class="btn btn-sm btn-outline-light me-1">Dashboard</a>
+            @if(auth()->user()->role === 'admin')
+                <a href="{{ route('jenis.index') }}" class="btn btn-sm btn-outline-light me-1">Jenis</a>
+                <a href="{{ route('barang.index') }}" class="btn btn-sm btn-outline-light me-1">Barang</a>
+            @endif
             <a href="{{ route('pelanggan.index') }}" class="btn btn-sm btn-outline-light me-1">Pelanggan</a>
             <a href="{{ route('transaksi.index') }}" class="btn btn-sm btn-outline-light me-3">Transaksi</a>
+            <a href="{{ route('transaksi.laporan') }}" class="btn btn-sm btn-outline-light me-1">Laporan</a>
 
             @auth
                 <span class="text-white me-2">{{ auth()->user()->name }}</span>

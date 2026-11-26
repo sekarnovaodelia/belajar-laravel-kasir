@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class BarangController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data  = Barang::with('jenis')->get();
+        $query = Barang::with('jenis');
+
+        if ($request->filled('search')) {
+            $query->where('nama_barang', 'like', '%' . $request->search . '%');
+        }
+
+        $data  = $query->get();
         $jenis = JenisBarang::all();
         return view('barang.index', compact('data', 'jenis'));
     }

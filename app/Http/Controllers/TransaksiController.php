@@ -107,4 +107,18 @@ class TransaksiController extends Controller
         return redirect()->route('transaksi.index')
             ->with('success', 'Transaksi berhasil dihapus, stok dikembalikan');
     }
+
+    public function laporan(Request $request)
+{
+    $query = Transaksi::with(['pelanggan', 'barang']);
+
+    if ($request->filled('dari') && $request->filled('sampai')) {
+        $query->whereBetween('tanggal', [$request->dari, $request->sampai]);
+    }
+
+    $data  = $query->latest()->get();
+    $total = $data->sum('total');
+
+    return view('transaksi.laporan', compact('data', 'total'));
+}   
 }

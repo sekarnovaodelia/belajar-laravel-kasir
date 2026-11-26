@@ -9,6 +9,17 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <form action="{{ route('barang.index') }}" method="GET" class="mb-3">
+    <div class="input-group">
+        <input type="text" name="search" class="form-control" 
+               placeholder="Cari nama barang..." value="{{ request('search') }}">
+        <button class="btn btn-primary">Cari</button>
+        @if(request('search'))
+            <a href="{{ route('barang.index') }}" class="btn btn-secondary">Reset</a>
+        @endif
+    </div>
+</form>
+
     <table class="table table-bordered">
         <thead>
             <tr>
