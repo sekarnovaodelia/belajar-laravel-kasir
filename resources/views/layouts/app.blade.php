@@ -19,8 +19,6 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        <!-- Topbar -->
-        @include('partials.topbar')
 
         <!-- Content -->
         <div class="flex-grow-1">

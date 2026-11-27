@@ -11,7 +11,7 @@
     </div>
     <a href="{{ route('pelanggan.create') }}" class="btn btn-primary rounded-3 fw-semibold shadow-sm"><i class="bi bi-plus-lg me-1"></i> Tambah Pelanggan</a>
 </div>
-<div class="card pos-card col-lg-10">
+<div class="card pos-card col-12">
     <div class="card-body p-0">
         <table class="table table-hover table-pos align-middle mb-0">
             <thead><tr><th class="ps-4 py-3">No</th><th class="py-3">Nama Pelanggan</th><th class="py-3">No HP</th><th class="text-center pe-4 py-3">Aksi</th></tr></thead>

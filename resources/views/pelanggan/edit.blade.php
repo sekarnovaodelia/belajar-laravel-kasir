@@ -5,7 +5,7 @@
     <div class="icon-box bg-warning bg-opacity-10 text-warning"><i class="bi bi-pencil-square"></i></div>
     <h4 class="mb-0 fw-bold text-dark">Edit Pelanggan</h4>
 </div>
-<div class="card pos-card col-lg-6">
+<div class="card pos-card col-12">
     <div class="card-body p-4">
         <form action="{{ route('pelanggan.update', $data->id) }}" method="POST">
             @csrf @method('PUT')

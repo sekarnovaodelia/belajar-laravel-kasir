@@ -5,7 +5,7 @@
     <div class="icon-box bg-primary bg-opacity-10 text-primary"><i class="bi bi-person-plus"></i></div>
     <h4 class="mb-0 fw-bold text-dark">Tambah Pelanggan</h4>
 </div>
-<div class="card pos-card col-lg-6">
+<div class="card pos-card col-12">
     <div class="card-body p-4">
         <form action="{{ route('pelanggan.store') }}" method="POST">
             @csrf

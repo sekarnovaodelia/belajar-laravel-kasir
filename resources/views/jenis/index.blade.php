@@ -12,7 +12,7 @@
     <a href="{{ route('jenis.create') }}" class="btn btn-primary rounded-3 fw-semibold shadow-sm"><i class="bi bi-plus-lg me-1"></i> Tambah Jenis</a>
 </div>
 
-<div class="card pos-card col-lg-8">
+<div class="card pos-card col-12">
     <div class="card-body p-0">
         <table class="table table-hover table-pos align-middle mb-0">
             <thead><tr><th class="ps-4 py-3">No</th><th class="py-3">Nama Jenis</th><th class="text-center pe-4 py-3">Aksi</th></tr></thead>
