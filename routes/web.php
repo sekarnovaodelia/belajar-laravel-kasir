@@ -9,6 +9,7 @@ use App\Http\Controllers\PelangganController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\StokMasukController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,6 @@ Route::post('/register', [AuthController::class, 'register']);
 |--------------------------------------------------------------------------
 */
 Route::middleware('auth')->group(function () {
-Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('pelanggan', PelangganController::class);
@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     // ----------------------------------------------
 
     Route::middleware('role:admin')->group(function () {
+        Route::resource('user', UserController::class);
         Route::resource('jenis', JenisBarangController::class);
         Route::resource('barang', BarangController::class);
         Route::resource('supplier', SupplierController::class);
@@ -54,6 +55,4 @@ Route::middleware('auth')->group(function () {
         Route::get('stok-masuk/create', [StokMasukController::class, 'create'])->name('stok-masuk.create');
         Route::post('stok-masuk', [StokMasukController::class, 'store'])->name('stok-masuk.store');
     });
-});
-
 });

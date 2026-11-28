@@ -83,6 +83,12 @@
                 <i class="bi bi-file-earmark-text"></i> Laporan Transaksi
             </a>
         </li>
+        <li class="sidebar-menu-title">Pengaturan</li>
+        <li>
+            <a href="{{ route('user.index') }}" class="{{ request()->routeIs('user.*') ? 'active' : '' }}">
+                <i class="bi bi-person-gear"></i> Manajemen User
+            </a>
+        </li>
         @endif
     </ul>
-</div>
+</div>  
